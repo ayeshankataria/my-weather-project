@@ -31,23 +31,12 @@ let months = [
 ];
 let month = months[now.getMonth()];
 
-let hours = now.getHours();
-let minutes = now.getMinutes();
-let time = `${hours}:${minutes}`;
-
-let currentDate = document.querySelector(".date");
-currentDate.innerHTML = `${time} ${today}, ${date} ${month}`;
-
 function showTemperature(response) {
-  console.log(response);
   document.querySelector(".city").innerHTML = response.data.name;
-  document.querySelector(".temp").innerHTML = Math.round(
-    response.data.main.temp
-  );
-  
+  document.querySelector(".temp").innerHTML = Math.round(response.data.main.temp);
 }
 
-function search(event) {
+function locationSearch(event) {
   event.preventDefault();
   let apiKey = "86f093aa43690ee890e5cd351bb4c53c";
   let city = document.querySelector("#input-current-city").value;
@@ -58,14 +47,11 @@ function search(event) {
   axios.get(`${apiUrl}`).then(showTemperature);
 }
 
-function getWeather(response) {
-  console.log(response);
+function getWeather (response) {
   let currentLocation = response.data.name;
   let currentCity = document.querySelector(".city");
   currentCity.innerHTML = `${currentLocation}`;
-  document.querySelector(".temp").innerHTML = Math.round(
-    response.data.main.temp
-  );
+  document.querySelector(".temp").innerHTML = Math.round(response.data.main.temp);
 }
 
 function handlePosition(position) {
@@ -81,5 +67,5 @@ let locate = document.querySelector("#current-location");
 locate.addEventListener("click", handlePosition);
 
 navigator.geolocation.getCurrentPosition(handlePosition);
-let form = document.querySelector(".form-place");
-form.addEventListener("submit", search);
+let form = document.querySelector("#form-place");
+form.addEventListener("submit", locationSearch);
